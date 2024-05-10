@@ -1,10 +1,14 @@
 
 import Capture from './components/Capture';
 import './App.css';
+import Theme from './components/Theme';
 
 function App() {
   return (
-    <Capture/>
+    <>
+      <Theme/>
+      <Capture />
+    </>
   );
 }
 
