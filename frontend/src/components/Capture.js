@@ -98,6 +98,29 @@ const VideoCapture = () => {
   };
 
   const UploadHeader = () => {
+    const sendFilesAwait = async () => {
+      const BASE_URL = "http://localhost:5000";
+      const formData = new FormData();
+
+      // recordedFrames.forEach((frame, index) => {
+      //   formData.append(`file`, frame);
+      // });
+      formData.append('file',recordedFrames[0]);
+      
+
+      console.log("formData", formData.get("file"));
+      try {
+        const response = await fetch(`${BASE_URL}/image_feed`, {
+          method: "POST",
+          body: formData,
+        });
+        const data = await response.json();
+        console.log(data);
+      } catch (error) {
+        console.error("Error uploading files: ", error);
+      }
+    };
+
     return (
       <div
         style={{
@@ -120,15 +143,7 @@ const VideoCapture = () => {
             style={{
               background: "rgba(255, 255, 255, 0.2)",
               border: "none",
-            }}
-          />
-
-          <input
-            placeholder="folder Name"
-            className="p-2 rounded-lg"
-            style={{
-              background: "rgba(255, 255, 255, 0.2)",
-              border: "none",
+              display: "none",
             }}
           />
         </div>
@@ -139,8 +154,9 @@ const VideoCapture = () => {
             color: "white",
             border: "none",
           }}
+          onClick={sendFilesAwait}
         >
-          Upload to Bucket
+          Infer
         </button>
       </div>
     );
